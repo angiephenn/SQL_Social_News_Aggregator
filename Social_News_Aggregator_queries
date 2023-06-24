@@ -1,0 +1,89 @@
+-- Part II:
+-- Creates the "users" table to store user information
+CREATE TABLE "users" (
+  "id" SERIAL PRIMARY KEY,
+  "username" VARCHAR(25) NOT NULL,
+  "email" VARCHAR(50) UNIQUE NOT NULL,
+  "password" VARCHAR(100) NOT NULL,
+  "created_at" TIMESTAMP DEFAULT NOW()
+);
+
+-- Creates the "topics" table to store topic information
+CREATE TABLE "topics" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(30) NOT NULL,
+  "description" VARCHAR(500)
+);
+
+-- Creates the "posts" table to store post information
+CREATE TABLE "posts" (
+  "id" SERIAL PRIMARY KEY,
+  "title" VARCHAR(100) NOT NULL,
+  "content" TEXT,
+  "url" VARCHAR(4000),
+  "user_id" INTEGER REFERENCES "users" ("id") ON DELETE SET NULL,
+  "topic_id" INTEGER REFERENCES "topics" ("id") ON DELETE CASCADE,
+  "created_at" TIMESTAMP DEFAULT NOW()
+);
+
+-- Creates the "comments" table to store comment information
+CREATE TABLE "comments" (
+  "id" SERIAL PRIMARY KEY,
+  "content" TEXT NOT NULL,
+  "user_id" INTEGER REFERENCES "users" ("id") ON DELETE SET NULL,
+  "post_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE,
+  "created_at" TIMESTAMP DEFAULT NOW()
+);
+
+-- Creates the "votes" table to store vote information
+CREATE TABLE "votes" (
+  "id" SERIAL PRIMARY KEY,
+  "value" SMALLINT NOT NULL,
+  "user_id" INTEGER REFERENCES "users" ("id") ON DELETE SET NULL,
+  "post_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE,
+  "created_at" TIMESTAMP DEFAULT NOW()
+);
+
+--Part III:
+-- Creates the "users" table to store user information
+CREATE TABLE "users" (
+  "id" SERIAL PRIMARY KEY,
+  "username" VARCHAR(25) NOT NULL,
+  "login" TIMESTAMP
+);
+
+-- Creates a unique index on the "username" column of the "users" table
+CREATE UNIQUE INDEX "find_username" ON "users" ("username");
+
+-- Creates the "topics" table to store topic information
+CREATE TABLE "topics" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(30) NOT NULL,
+  "description" VARCHAR(500)
+);
+
+-- Creates a unique index on the "name" column of the "topics" table
+CREATE UNIQUE INDEX "find_topic_name" ON "topics" ("name");
+
+-- Creates the "posts" table to store post information
+CREATE TABLE "posts" (
+  "id" SERIAL PRIMARY KEY,
+  "title" VARCHAR(100) NOT NULL,
+  "text_content" TEXT,
+  "url" VARCHAR(4000),
+  "user_id" INTEGER,
+  "topic_id" INTEGER,
+  "post_created" TIMESTAMP
+);
+
+-- Adds a foreign key constraint on the "user_id" column of the "posts" table
+ALTER TABLE "posts" ADD CONSTRAINT "fk_user_id" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE SET NULL;
+
+-- Adds a foreign key constraint on the "topic_id" column of the "posts" table
+ALTER TABLE "posts" ADD CONSTRAINT "fk_topic_id" FOREIGN KEY ("topic_id") REFERENCES "topics" ("id") ON DELETE CASCADE;
+
+-- Creates a unique index on the "url" column of the "posts" table
+CREATE UNIQUE INDEX "find_url" ON "posts" ("url");
+
+--
+
