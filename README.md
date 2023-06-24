@@ -8,7 +8,7 @@ Fixing the data model: Implementation of necessary modifications and improvement
 Enhancements: Addition of robust features to enhance the performance and functionality of Udiddit. This may involve integrating web analytics capabilities to gather and analyze user data, providing insights into user behavior, content popularity, and engagement.
 
 # Data Source:
-The repository includes an open-source tutorial dataset obtained from Udacity. The dataset can be accessed at the following link:
+This project was based on a dataset provided by Udacity. For more info see the following link:
 https://www.udacity.com/course/learn-sql--nd072
 
 # Syllabus:
